@@ -16,4 +16,9 @@
     <string name="petspice">Especie de la mascota</string>
     <string name="btnagregar">Agregar nueva mascota</string>
     <string name="noregistros">¡No hay registros!</string>
+    <string name="dialog_title_confirmation">Confirmacion</string>
+    <string name="dialog_message_delete_pet">¿Realmente desea eliminar a la mascota %1$s?</string>
+    <string name="btnaceptar">Aceptar</string>
+    <string name="pet_deleted_successfully">Mascota borrada correctamente</string>
+    <string name="pet_error_deleted">Error al borrar el juego</string>
 </resources>

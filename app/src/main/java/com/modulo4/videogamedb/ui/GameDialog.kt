@@ -150,10 +150,11 @@ class GameDialog(
                 }
             },{
 
+                val context = requireContext()
                 AlertDialog.Builder(requireContext())
-                    .setTitle("Confirmacion")
-                    .setMessage("¿Realmente desea eliminar el juego ${game.name}?")
-                    .setPositiveButton("Aceptar"){_,_ ->
+                    .setTitle(getString(R.string.dialog_title_confirmation))
+                    .setMessage(getString(R.string.dialog_message_delete_pet, game.name))
+                    .setPositiveButton(getString(R.string.btnaceptar)){_,_ ->
 
                         try {
                             lifecycleScope.launch(Dispatchers.IO) {
@@ -162,21 +163,23 @@ class GameDialog(
                                 }
                                 result.await()
                                 withContext(Dispatchers.Main){
-                                    message("Juego borrado exitosamente")
+                                    message(context.getString(R.string.pet_deleted_successfully))
                                     updateUI()
                                 }
                             }
                         }
                         catch (e: IOException){
-                            message("Error al actualizar el juego")
+                            message(context.getString(R.string.pet_error_deleted))
                         }
 
 
                     }
-                    .setNegativeButton("Cancelar"){dialog,_ ->
+                    .setNegativeButton(getString(R.string.btncancel)){dialog,_ ->
                         dialog.dismiss()
                     }
                     .create().show()
+
+
 
             })
 
