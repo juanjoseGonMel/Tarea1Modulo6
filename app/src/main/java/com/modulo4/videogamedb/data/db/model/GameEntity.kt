@@ -8,12 +8,12 @@ import com.modulo4.videogamedb.util.Constants
 @Entity(tableName = Constants.DATABASE_GAME_TABLE)
 data class GameEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "game_id")
+    @ColumnInfo(name = "pet_id")
     var id: Long = 0,
-    @ColumnInfo(name = "game_title")
-    var title: String,
-    @ColumnInfo(name = "game_genre")
-    var genre: String,
-    @ColumnInfo(name = "game_developer", defaultValue = "Desconocido")
-    var developer: String
+    @ColumnInfo(name = "pet_name")
+    var name: String,
+    @ColumnInfo(name = "pet_spice")
+    var spice: String,
+    @ColumnInfo(name = "pet_description", defaultValue = "Desconocido")
+    var description: String
 )

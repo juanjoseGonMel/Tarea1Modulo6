@@ -3,10 +3,17 @@ package com.modulo4.videogamedb.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AbsListView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -25,9 +32,9 @@ import java.io.IOException
 class GameDialog(
     private val newGame: Boolean = true,
     private var game : GameEntity = GameEntity(
-        title = "",
-        genre = "",
-        developer = ""
+        name = "",
+        spice = "",
+        description = ""
     ),
     private val updateUI: () -> Unit,
     private val message: (String) -> Unit
@@ -45,23 +52,58 @@ class GameDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = GameDialogBinding.inflate(requireActivity().layoutInflater)
-
         repository = (requireContext().applicationContext as VideoGamesDBApp).repository
-
         builder = AlertDialog.Builder(requireContext())
 
-        binding.apply {
-            tietTitle.setText(game.title)
-            tietGenre.setText(game.genre)
-            tietDeveloper.setText(game.developer)
+
+        val dato = resources.getStringArray(R.array.spinner_items).toMutableList()
+        val adapter = object : ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            dato
+        ){
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent) as TextView
+                if (position == 0) {
+                    view.visibility = View.INVISIBLE
+                    view.layoutParams = AbsListView.LayoutParams(0, 0)
+                } else {
+                    view.visibility = View.VISIBLE
+                    view.layoutParams = AbsListView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
+                return view
+            }
+        }
+            .also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        binding.spinnerSpice.adapter = adapter
+
+
+        if (game.spice.isNotEmpty()) {
+            val spinnerItems = resources.getStringArray(R.array.spinner_items)
+            val defaultIndex = spinnerItems.indexOf(game.spice)
+            if (defaultIndex != -1) {
+                binding.spinnerSpice.setSelection(defaultIndex)
+            }
         }
 
+        binding.apply {
+            tietTitle.setText(game.name)
+            tietDeveloper.setText(game.description)
+        }
+
+
+
         dialog = if(newGame)
-            buildDialog("Guardar","Cancelar",{
+            buildDialog(getString(R.string.btnsave), getString(R.string.btncancel),{
                 binding.apply {
-                    game.title = tietTitle.text.toString()
-                    game.genre = tietGenre.text.toString()
-                    game.developer = tietDeveloper.text.toString()
+                    game.name = tietTitle.text.toString()
+                    game.spice = spinnerSpice.selectedItem.toString()
+                    game.description = tietDeveloper.text.toString()
                 }
                 try {
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -70,24 +112,23 @@ class GameDialog(
                         }
                         result.await()
                         withContext(Dispatchers.Main){
-                            message("Juego guardado exitosamente")
+                            message(getString(R.string.pet_saved_successfully))
                             updateUI()
                         }
                     }
 
-
                 }catch (e: IOException){
-                    message("Error al guardad el juego")
+                    message(getString(R.string.pet_error_save))
                 }
             },{
                 //Cancelar
             })
         else
-            buildDialog("Actualizar","Borrar",{
+            buildDialog(getString(R.string.btnupdate), getString(R.string.btndelate),{
                 binding.apply {
-                    game.title = tietTitle.text.toString()
-                    game.genre = tietGenre.text.toString()
-                    game.developer = tietDeveloper.text.toString()
+                    game.name = tietTitle.text.toString()
+                    game.spice = spinnerSpice.selectedItem.toString()
+                    game.description = tietDeveloper.text.toString()
                 }
                 try {
 
@@ -97,7 +138,7 @@ class GameDialog(
                         }
                         result.await()
                         withContext(Dispatchers.Main){
-                            message("Juego actualizar exitosamente")
+                            message(getString(R.string.pet_update_successfully))
                             updateUI()
                         }
                     }
@@ -105,13 +146,13 @@ class GameDialog(
 
 
                 }catch (e: IOException){
-                    message("Error al actualizar el juego")
+                    message(getString(R.string.pet_error_update))
                 }
             },{
 
                 AlertDialog.Builder(requireContext())
                     .setTitle("Confirmacion")
-                    .setMessage("¿Realmente desea eliminar el juego ${game.title}?")
+                    .setMessage("¿Realmente desea eliminar el juego ${game.name}?")
                     .setPositiveButton("Aceptar"){_,_ ->
 
                         try {
@@ -139,34 +180,6 @@ class GameDialog(
 
             })
 
-       /* dialog = builder.setView(binding.root)
-            .setTitle(getString(R.string.title))
-            .setPositiveButton("Guardar", DialogInterface.OnClickListener{ _, _ ->
-                binding.apply {
-                    game.title = tietTitle.text.toString()
-                    game.genre = tietGenre.text.toString()
-                    game.developer = tietDeveloper.text.toString()
-                }
-                try {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        repository.insertGame(game)
-                    }
-                    Toast.makeText(requireContext(),
-                        "Juego guardado exitosamente",
-                        Toast.LENGTH_SHORT).show()
-
-                    updateUI()
-
-                }catch (e: IOException){
-                    Toast.makeText(requireContext(),
-                        "Error al guardad el juego",
-                        Toast.LENGTH_SHORT).show()
-                }
-            })
-            .setNegativeButton("Cancelar"){_, _ ->
-
-            }
-            .create()*/
         return dialog
     }
 
@@ -197,20 +210,17 @@ class GameDialog(
 
         })
 
-        binding.tietGenre.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
+        binding.spinnerSpice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                //val selectedItem = parent.getItemAtPosition(position).toString()
                 saveButton?.isEnabled = validateFields()
             }
 
-        })
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                saveButton?.isEnabled = validateFields()
+            }
+        }
+
 
         binding.tietDeveloper.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -229,10 +239,14 @@ class GameDialog(
 
     }
 
-    private fun validateFields(): Boolean
-        = binding.tietTitle.text.toString().isNotEmpty() &&
-            binding.tietGenre.text.toString().isNotEmpty() &&
-            binding.tietDeveloper.text.toString().isNotEmpty()
+    private fun validateFields(): Boolean{
+
+        val isSpinnerItemSelected = binding.spinnerSpice.selectedItemPosition != 0
+
+        return binding.tietTitle.text.toString().isNotEmpty() &&
+                isSpinnerItemSelected &&
+                binding.tietDeveloper.text.toString().isNotEmpty()
+    }
 
     private fun buildDialog(
         btn1Text: String,

@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity() {
                 })
             dialog.show(supportFragmentManager,"dialog2")
 
-            /*Toast.makeText(this,"Click en el juego: ${game.title}",
-                Toast.LENGTH_LONG).show()*/
 
         }
 
@@ -50,17 +48,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvGames.adapter = gameAdapter
 
         updateUI()
-
-        /*
-        val game = GameEntity(
-            title = "Super Mario Galaxy",
-            genre = "Plataformas",
-            developer = "Nintendo"
-            )
-        lifecycleScope.launch {
-            repository.insertGame(game)
-        }
-        */
 
     }
 
@@ -72,15 +59,10 @@ class MainActivity : AppCompatActivity() {
                 messageUI(text)
             }
         )
-        dialog.show(supportFragmentManager, "dialog1")
+        dialog.show(supportFragmentManager, getString(R.string.btnsave))
     }
 
     private fun messageUI(text: String){
-        /*Toast.makeText(
-            this,
-            text,
-            Toast.LENGTH_LONG
-        ).show()*/
 
         Snackbar.make(
             binding.cl,

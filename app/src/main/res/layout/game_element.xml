@@ -27,7 +27,7 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_margin="8dp"
-                android:contentDescription="Imagen"
+                android:contentDescription="@string/petimg"
                 android:outlineProvider="bounds"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:textColor="#FF0000"
+                android:textColor="@color/namecolor"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
                 app:layout_constraintStart_toEndOf="@+id/ivIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.16"
-                tools:text="Título del juego" />
+                tools:text="@string/petname" />
 
             <TextView
                 android:id="@+id/tvGenre"
@@ -66,22 +66,23 @@
                 app:layout_constraintStart_toEndOf="@id/ivIcon"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
                 app:layout_constraintVertical_bias="0.2"
-                tools:text="Género" />
+                tools:text="@string/petspice" />
 
             <TextView
                 android:id="@+id/tvDeveloper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
-                android:gravity="end"
+                android:gravity="start"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivIcon"
                 app:layout_constraintTop_toBottomOf="@id/tvGenre"
-                tools:text="Developer" />
+                tools:text="@string/petdescription" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
