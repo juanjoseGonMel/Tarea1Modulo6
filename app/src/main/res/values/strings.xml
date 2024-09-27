@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">VideoGameDB</string>
-    <string name="title">Game</string>
+    <string name="title">Mascota</string>
+    <string name="Header">Header</string>
+    <string name="petname">Nombre de la mascota</string>
+    <string name="petdescription">Descripcion de la mascota</string>
+    <string name="pet_saved_successfully">Mascota guardada correctamente</string>
+    <string name="pet_error_save">La Mascota no pudo ser guardada</string>
+    <string name="btnsave">Guardar</string>
+    <string name="btncancel">Cancelar</string>
+    <string name="btnupdate">Actualizar</string>
+    <string name="btndelate">Borrar</string>
+    <string name="pet_update_successfully">Mascota actualizada correctamente</string>
+    <string name="pet_error_update">Error al actualizar</string>
+    <string name="petimg">Imagen</string>
+    <string name="petspice">Especie de la mascota</string>
+    <string name="btnagregar">Agregar nueva mascota</string>
+    <string name="noregistros">¡No hay registros!</string>
+    <string name="dialog_title_confirmation">Confirmacion</string>
+    <string name="dialog_message_delete_pet">¿Realmente desea eliminar a la mascota %1$s?</string>
+    <string name="btnaceptar">Aceptar</string>
+    <string name="pet_deleted_successfully">Mascota borrada correctamente</string>
+    <string name="pet_error_deleted">Error al borrar el juego</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="Header"
+        android:contentDescription="@string/Header"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/header" />
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:hint="Título"
+        android:hint="@string/petname"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -43,34 +43,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilGenre"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <Spinner
+        android:id="@+id/spinnerSpice"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Género"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:startIconDrawable="@drawable/ic_genre">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:maxLines="1">
-
-        </com.google.android.material.textfield.TextInputEditText>
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="48dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDeveloper"
@@ -81,7 +59,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:hint="Desarrollador"
+        android:hint="@string/petdescription"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"

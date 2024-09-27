@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="snackbar">#830505</color>
+    <color name="namecolor">#FF0000</color>
+    <color name="btnagregar">#F83232</color>
 </resources>
